@@ -1,0 +1,212 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import javax.swing.JButton;
+
+public class FrameLogin extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField txtUser;
+	private JPasswordField txtPass;
+	private JLabel lblLogin = new JLabel("LOG IN");
+	private JLabel lblLoginMsg = new JLabel("");
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FrameLogin frame = new FrameLogin();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public FrameLogin() {
+		setUndecorated(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(0, 0, 1350, 730);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(30, 144, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel pnlUser = new JPanel();
+		pnlUser.setBounds(556, 287, 270, 45);
+		contentPane.add(pnlUser);
+		pnlUser.setLayout(null);
+		
+		txtUser = new JTextField();
+		txtUser.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(txtUser.getText().equals("Username")) {
+					txtUser.setText("");
+				}
+				else {
+					txtUser.selectAll();
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtUser.getText().equals("")) {
+					txtUser.setText("Username");
+				}
+			}
+		});
+		txtUser.setBorder(null);
+		txtUser.setText("Username");
+		txtUser.setBounds(10, 10, 194, 27);
+		pnlUser.add(txtUser);
+		txtUser.setColumns(10);
+		
+		JLabel userLogo = new JLabel("");
+		userLogo.setHorizontalAlignment(SwingConstants.CENTER);
+		userLogo.setBounds(225, 5, 40, 40);
+		pnlUser.add(userLogo);
+		setLocationRelativeTo(null);
+		userLogo.setHorizontalAlignment(SwingConstants.CENTER);
+		userLogo.setIcon(new ImageIcon(FrameLogin.class.getResource("/image/user-icon.png")));
+		userLogo.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user-icon.png")).getImage().getScaledInstance(39, 39, Image.SCALE_SMOOTH)));
+		
+		JPanel pnlPass = new JPanel();
+		pnlPass.setBounds(556, 362, 270, 45);
+		contentPane.add(pnlPass);
+		pnlPass.setLayout(null);
+		
+		txtPass = new JPasswordField();
+		txtPass.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(txtPass.getText().equals("Password")) {
+					txtPass.setEchoChar('●');
+					txtPass.setText("");
+				}
+				else {
+					txtPass.selectAll();
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtPass.getText().equals("")) {
+					txtPass.setText("Password");
+					txtPass.setEchoChar((char)0);
+				}
+			}
+		});
+		txtPass.setBorder(null);
+		txtPass.setEchoChar((char)0);
+		txtPass.setText("Password");
+		txtPass.setBounds(10, 10, 194, 27);
+		pnlPass.add(txtPass);
+		
+		JLabel passLogo = new JLabel("");
+		passLogo.setBounds(225, 5, 45, 35);
+		pnlPass.add(passLogo);
+		passLogo.setHorizontalAlignment(SwingConstants.CENTER);
+		passLogo.setHorizontalAlignment(SwingConstants.CENTER);
+		passLogo.setIcon(new ImageIcon(FrameLogin.class.getResource("/image/lock-icon.png")));
+		passLogo.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/image/lock-icon.png")).getImage().getScaledInstance(35,35, Image.SCALE_SMOOTH)));
+		setLocationRelativeTo(null);
+		
+		JPanel pnlBtnLogin = new JPanel();
+		pnlBtnLogin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(txtUser.getText().equals("admin") && txtPass.getText().equals("admin123")) {
+					lblLoginMsg.setText("");
+					JOptionPane.showMessageDialog(null, "Login Successful!");					
+					FrameDashboard dashboard = new FrameDashboard();
+					dashboard.setVisible(true);
+				}
+				else if(txtUser.getText().equals("") || txtUser.getText().equals("Username") ||
+						txtPass.getText().equals("") || txtPass.getText().equals("Password")) {
+					lblLoginMsg.setText("Please input all requirements.");
+				}								
+				else {
+					lblLoginMsg.setText("Username and Password not match.");
+				}				
+			}
+		});
+		
+		pnlBtnLogin.setBackground(new Color(0, 0, 128));
+		pnlBtnLogin.setBounds(556, 453, 270, 49);
+		contentPane.add(pnlBtnLogin);
+		pnlBtnLogin.setLayout(null);
+		
+		lblLogin.setForeground(new Color(255, 255, 255));
+		lblLogin.setBackground(new Color(255, 255, 255));
+		lblLogin.setFont(new Font("Arial", Font.BOLD, 14));
+		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLogin.setBounds(71, 11, 116, 29);
+		pnlBtnLogin.add(lblLogin);
+		
+		JLabel lblx = new JLabel("X");
+		lblx.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(JOptionPane.showConfirmDialog(null, "Are you sure you want to close this application?","Confirmation", JOptionPane.YES_NO_OPTION) == 0) {
+					FrameLogin.this.dispose();
+				}
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblx.setForeground(Color.RED);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblx.setForeground(Color.WHITE);
+			}
+		});
+		lblx.setBackground(new Color(255, 0, 0));
+		lblx.setFont(new Font("Arial", Font.BOLD, 20));
+		lblx.setForeground(new Color(255, 255, 255));
+		lblx.setHorizontalAlignment(SwingConstants.CENTER);
+		lblx.setBounds(1310, 11, 30, 30);
+		contentPane.add(lblx);
+		
+		JLabel rtuLogo = new JLabel(" ");
+		rtuLogo.setBounds(556, 107, 270, 166);
+		contentPane.add(rtuLogo);
+		setLocationRelativeTo(null);
+		rtuLogo.setHorizontalAlignment(SwingConstants.CENTER);
+		//rtuLogo.setBounds(10, 11, 410, 166);
+		//panel.add(rtuLogo);
+		rtuLogo.setIcon(new ImageIcon(FrameLogin.class.getResource("/image/RTU_Logo.png")));
+		rtuLogo.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/image/RTU_Logo.png")).getImage().getScaledInstance(90, 85, Image.SCALE_SMOOTH)));
+		
+		lblLoginMsg.setBounds(556, 418, 270, 14);
+		contentPane.add(lblLoginMsg);
+		
+		
+		//passLogo_1.setBounds(866, 382, 49, 49);
+		//contentPane.add(passLogo_1);
+	}
+}
+
+

@@ -1,0 +1,326 @@
+import java.awt.EventQueue;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.SystemColor;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.JButton;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class FrameDashboard extends JFrame {
+
+	private JPanel contentPane;
+	private JPanel paneMenu;
+	
+	private PanelAdd addPanel;
+	private PanelSearch searchPanel;
+	private PanelGrade editGradePanel;
+	private PanelEditInfo editInfoPanel;
+	private PanelChangePass adminChangePassPanel;
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FrameDashboard frame = new FrameDashboard();
+					frame.setVisible(true);					
+					} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public FrameDashboard() {
+		getContentPane().setBackground(Color.WHITE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		//setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setBounds(0, 0, 1350, 730);
+		setUndecorated(true);
+		setLocationRelativeTo(null);
+		contentPane = new JPanel();
+		setContentPane(contentPane);		
+		contentPane.setLayout(null);;
+		/*
+		addPanel = new PanelAdd();		
+		searchPanel = new PanelSearch();
+		editGradePanel = new PanelGrade();
+		editInfoPanel = new PanelEditInfo();
+		adminChangePassPanel = new PanelChangePass();		
+		*/
+		paneMenu = new JPanel();
+		paneMenu.setBackground(new Color(30, 144, 255));
+		paneMenu.setBounds(0,0,431,730);
+		contentPane.add(paneMenu);
+		getContentPane().add(paneMenu, BorderLayout.CENTER);
+		paneMenu.setLayout(null);
+		
+		JLabel rtuLogo = new JLabel(" ");
+		rtuLogo.setHorizontalAlignment(SwingConstants.LEFT);
+		rtuLogo.setBounds(10, 11, 410, 166);
+		paneMenu.add(rtuLogo);
+		rtuLogo.setIcon(new ImageIcon(RegistrationForm.class.getResource("/image/RTU_Logo.png")));
+		rtuLogo.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/image/RTU_Logo.png")).getImage().getScaledInstance(90, 85, Image.SCALE_SMOOTH)));
+		rtuLogo.setBounds(5, 5, 90, 85);		
+		
+		JPanel add_panel = new JPanel();		
+		add_panel.addMouseListener(new PanelButtonMouseAdapter(add_panel) {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			menuClicked(addPanel);
+		}
+		});
+		
+		add_panel.setBackground(new Color(30, 144, 255));
+		add_panel.setBounds(0, 180, 430, 74);
+		paneMenu.add(add_panel);
+		add_panel.setLayout(null);
+		
+		JLabel addLabel = new JLabel("Add Student");
+		addLabel.setBounds(151, 26, 122, 21);
+		add_panel.add(addLabel);
+		addLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		addLabel.setForeground(Color.WHITE);
+		addLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel studentLogo = new JLabel(" ");
+		studentLogo.setBounds(60, 7, 65, 60);
+		add_panel.add(studentLogo);
+		studentLogo.setIcon(new ImageIcon(RegistrationForm.class.getResource("/image/add-icon.png")));
+		studentLogo.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/image/add-icon.png")).getImage().getScaledInstance(65, 60, Image.SCALE_SMOOTH)));				
+		
+		JPanel search_panel = new JPanel();		
+		search_panel.addMouseListener(new PanelButtonMouseAdapter(search_panel) {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				menuClicked(searchPanel);
+			}
+		});
+		
+		search_panel.setBackground(new Color(30, 144, 255));
+		search_panel.setBounds(0, 254, 430, 74);
+		paneMenu.add(search_panel);
+		search_panel.setLayout(null);
+		
+		JLabel searchLabel = new JLabel("Search Student");
+		searchLabel.setBounds(150, 26, 123, 27);
+		search_panel.add(searchLabel);
+		searchLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		searchLabel.setForeground(Color.WHITE);
+		searchLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel searchLogo = new JLabel(" ");
+		searchLogo.setBackground(new Color(255, 255, 255));
+		searchLogo.setBounds(63, 7, 60, 60);
+		search_panel.add(searchLogo);
+		searchLogo.setIcon(new ImageIcon(RegistrationForm.class.getResource("/image/search-icon.png")));
+		searchLogo.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/image/search-icon.png")).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+		
+		JPanel editGrade_panel = new JPanel();		
+		editGrade_panel.addMouseListener(new PanelButtonMouseAdapter(editGrade_panel) {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				menuClicked(editGradePanel);
+			}
+		});
+		
+		editGrade_panel.setBackground(new Color(30, 144, 255));
+		editGrade_panel.setBounds(0, 328, 430, 74);
+		paneMenu.add(editGrade_panel);
+		editGrade_panel.setLayout(null);
+		
+		JLabel infoLabel = new JLabel("Edit Student Info");
+		infoLabel.setBackground(new Color(255, 255, 255));
+		infoLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		infoLabel.setForeground(Color.WHITE);
+		infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		infoLabel.setBounds(138, 26, 148, 25);
+		editGrade_panel.add(infoLabel);
+		
+		JLabel infoLogo = new JLabel(" ");
+		infoLogo.setBounds(63, 7, 60, 60);
+		editGrade_panel.add(infoLogo);
+		infoLogo.setIcon(new ImageIcon(RegistrationForm.class.getResource("/image/student-info.png")));
+		infoLogo.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/image/student-info.png")).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+		
+		JPanel editInfo_panel = new JPanel();
+		editInfo_panel.addMouseListener(new PanelButtonMouseAdapter(editInfo_panel) {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				menuClicked(editInfoPanel);
+			}
+		});
+		
+		editInfo_panel.setBackground(new Color(30, 144, 255));
+		editInfo_panel.setBounds(0, 400, 430, 74);
+		paneMenu.add(editInfo_panel);
+		editInfo_panel.setLayout(null);
+		
+		JLabel gradeLabel = new JLabel("Student Grades");
+		gradeLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		gradeLabel.setForeground(Color.WHITE);
+		gradeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		gradeLabel.setBounds(139, 26, 141, 19);
+		editInfo_panel.add(gradeLabel);
+		
+		JLabel gradeLogo = new JLabel(" ");
+		gradeLogo.setBackground(new Color(30, 144, 255));
+		gradeLogo.setBounds(63, 7, 60, 60);
+		editInfo_panel.add(gradeLogo);
+		gradeLogo.setIcon(new ImageIcon(RegistrationForm.class.getResource("/image/grade-icon.png")));
+		gradeLogo.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/image/grade-icon.png")).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+		
+		JPanel paneChangePass = new JPanel();
+		paneChangePass.addMouseListener(new PanelButtonMouseAdapter(paneChangePass) {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				menuClicked(adminChangePassPanel);
+			}
+		});
+		
+		paneChangePass.setBackground(new Color(30, 144, 255));
+		paneChangePass.setBounds(0, 473, 430, 74);
+		paneMenu.add(paneChangePass);
+		paneChangePass.setLayout(null);
+		
+		JLabel passwordLabel = new JLabel("Change Password");
+		passwordLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		passwordLabel.setForeground(Color.WHITE);
+		passwordLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		passwordLabel.setBounds(138, 26, 143, 25);
+		paneChangePass.add(passwordLabel);
+		
+		JLabel passwordLogo = new JLabel(" ");
+		passwordLogo.setBounds(63, 7, 60, 60);
+		paneChangePass.add(passwordLogo);
+		passwordLogo.setIcon(new ImageIcon(RegistrationForm.class.getResource("/image/lock-icon.png")));
+		passwordLogo.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/image/lock-icon.png")).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+		
+		JPanel paneLogout = new JPanel();
+		/*
+		logout_panel.addMouseListener(new PanelButtonMouseAdapter(logout_panel) {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(JOptionPane.showConfirmDialog(null, "Are you sure you want to sign out?") == 0) {
+				FrameLogin login = new FrameLogin();
+				login.setVisible(true);
+				FrameDashboard.this.dispose();				
+				}
+			}
+		});
+		*/
+		paneLogout.setBackground(new Color(30, 144, 255));
+		paneLogout.setBounds(0, 546, 430, 74);
+		paneMenu.add(paneLogout);
+		paneLogout.setLayout(null);		
+		
+		JLabel logoutLabel = new JLabel("Sign Out");
+		logoutLabel.setForeground(new Color(255, 255, 255));
+		logoutLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		logoutLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		logoutLabel.setBounds(143, 27, 132, 36);
+		paneLogout.add(logoutLabel);
+		/*
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.LIGHT_GRAY);
+		panel_1.setBounds(429, 0, 921, 730);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
+		*/
+		JLabel lblx = new JLabel("X");
+		lblx.setForeground(new Color(0, 0, 0));
+		lblx.setBounds(1310, 11, 30, 30);
+		//panel_1.add(lblx);
+		lblx.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(JOptionPane.showConfirmDialog(null, "Are you sure you want to close this application?","Confirmation",JOptionPane.YES_NO_OPTION) == 0) {
+					FrameDashboard.this.dispose();
+				}
+			}
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				lblx.setForeground(Color.RED);
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				lblx.setForeground(Color.BLACK);
+			}
+		});
+		contentPane.add(lblx);
+		
+		lblx.setFont(new Font("Dialog", Font.BOLD, 20));
+		lblx.setHorizontalAlignment(SwingConstants.CENTER);
+	
+		
+		JPanel paneMainContent = new JPanel();
+		paneMainContent.setBackground(new Color(255, 255, 255));
+		paneMainContent.setBounds(429, 0, 921, 730);
+		contentPane.add(paneMainContent);
+		paneMainContent.setLayout(null);
+	 
+		paneMainContent.add(addPanel);
+		paneMainContent.add(searchPanel);
+		paneMainContent.add(editGradePanel);
+		paneMainContent.add(editInfoPanel);
+		paneMainContent.add(adminChangePassPanel);
+		
+		menuClicked(addPanel);
+	}
+	
+	
+	public void menuClicked(JPanel panel) {
+		addPanel.setVisible(false);
+		searchPanel.setVisible(false);
+		editGradePanel.setVisible(false);		
+		editInfoPanel.setVisible(false);
+		adminChangePassPanel.setVisible(false);
+		
+		panel.setVisible(true);
+		
+		}
+	
+	private class PanelButtonMouseAdapter extends MouseAdapter{
+		JPanel paneMenu;
+		public PanelButtonMouseAdapter(JPanel panel) {
+			this.paneMenu = panel;
+		}		
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			paneMenu.setBackground(new Color(100, 149, 237));			
+		}
+		@Override
+		public void mouseExited(MouseEvent e) {
+			paneMenu.setBackground(new Color(30, 144, 255));
+		}
+		@Override
+		public void mousePressed(MouseEvent e) {
+			paneMenu.setBackground(new Color(70, 130, 180));
+		}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			paneMenu.setBackground(new Color(100, 149, 237));
+		}		
+		
+	}
+}	
+
